@@ -88,7 +88,7 @@ li {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding-right: 5rem;
+    padding-right: 6rem;
 
     @include lg {
       justify-content: flex-end;
@@ -175,6 +175,10 @@ li {
 
   &__left {
     padding-left: 1.25rem;
+
+    @include lg {
+      align-self: flex-start;
+    }
   }
 
   &__text {
@@ -182,22 +186,63 @@ li {
     font-size: $step--1;
     font-weight: 400;
     line-height: 1.5;
+    margin-bottom: 0.25rem;
   }
 }
 
 .top-banner-nav {
   display: flex;
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
   border-top: 1px solid map-get($map: $colors, $key: 'brand-pastel');
   border-left: 1px solid map-get($map: $colors, $key: 'brand-pastel');
   border-right: 1px solid map-get($map: $colors, $key: 'brand-pastel');
 
+  &__separator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    width: 1px;
+    height: 1.75rem;
+    background-color: map-get($map: $colors, $key: 'brand-pastel');
+  }
+
+  &__bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 0px;
+
+    &--news {
+      background-color: map-get($map: $colors, $key: 'news-bright');
+      height: 4px;
+    }
+
+    &--opinion {
+      background-color: map-get($map: $colors, $key: 'opinion-bright');
+    }
+
+    &--sport {
+      background-color: map-get($map: $colors, $key: 'sport-bright');
+    }
+
+    &--culture {
+      background-color: map-get($map: $colors, $key: 'culture-bright');
+    }
+
+    &--lifestyle {
+      background-color: map-get($map: $colors, $key: 'lifestyle-bright');
+    }
+  }
+
   & li {
-    padding-top: 0em;
+    position: relative;
+    padding-top: 0.25em;
     padding-bottom: 0.375em;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    border-top: 4px solid transparent;
     font-size: $step--2;
 
     @include sm {
@@ -209,9 +254,15 @@ li {
       font-size: $step-0;
     }
 
-    &:hover {
-      transition: 1s;
-      border-top-color: red;
+    &:hover .top-banner-nav__bar {
+      transition: height 0.25s linear;
+      height: 4px;
+    }
+  }
+
+  & li:first-of-type {
+    @include lg {
+      padding-left: 1.25rem;
     }
   }
 
@@ -220,5 +271,14 @@ li {
     font-weight: bold;
     color: map-get($map: $colors, $key: 'white');
     text-decoration: none;
+  }
+
+  &__more {
+    font-family: $font-secondary;
+    cursor: pointer;
+
+    &:hover {
+      color: map-get($map: $colors, $key: 'highlight-main');
+    }
   }
 }
