@@ -14,8 +14,8 @@
 // -------------------------------------------
 
 body {
-  color: map-get($map: $colors, $key: 'black');
-  background-color: map-get($map: $colors, $key: 'white');
+  color: map-get($map: $colors, $key: 'brightness-7');
+  background-color: map-get($map: $colors, $key: 'brightness-100');
   font-family: $font-primary;
   min-height: 100%;
 }
@@ -81,7 +81,7 @@ li {
 
 .top-nav {
   background-color: map-get($map: $colors, $key: 'brand-dark');
-  color: map-get($map: $colors, $key: 'white');
+  color: map-get($map: $colors, $key: 'brightness-100');
   font-size: 1rem;
 
   &__flex {
@@ -105,7 +105,7 @@ li {
   }
 
   &__link {
-    color: map-get($map: $colors, $key: 'white');
+    color: map-get($map: $colors, $key: 'brightness-100');
 
     &:hover {
       text-decoration: underline;
@@ -120,7 +120,7 @@ li {
     }
 
     &--edition {
-      color: map-get($map: $colors, $key: 'white');
+      color: map-get($map: $colors, $key: 'brightness-100');
       padding-right: 0.5em;
 
       &:hover {
@@ -132,7 +132,7 @@ li {
   &__icon {
     width: 1.125rem;
     height: 1.125rem;
-    fill: map-get($map: $colors, $key: 'white');
+    fill: map-get($map: $colors, $key: 'brightness-100');
     margin-right: 0.25rem;
 
     &--print {
@@ -162,7 +162,7 @@ li {
 
 .top-banner {
   background-color: map-get($map: $colors, $key: 'brand-main');
-  color: map-get($map: $colors, $key: 'white');
+  color: map-get($map: $colors, $key: 'brightness-100');
   width: 100%;
 
   h2 {
@@ -192,6 +192,7 @@ li {
 
 .top-banner-nav {
   display: flex;
+  flex-wrap: wrap;
   margin-top: 1.25rem;
   border-top: 1px solid map-get($map: $colors, $key: 'brand-pastel');
   border-left: 1px solid map-get($map: $colors, $key: 'brand-pastel');
@@ -203,8 +204,12 @@ li {
     right: 0;
     display: inline-block;
     width: 1px;
-    height: 1.75rem;
+    height: 100%;
     background-color: map-get($map: $colors, $key: 'brand-pastel');
+
+    @include sm {
+      height: 1.75rem;
+    }
   }
 
   &__bar {
@@ -269,7 +274,7 @@ li {
   & a {
     font-family: $font-secondary;
     font-weight: bold;
-    color: map-get($map: $colors, $key: 'white');
+    color: map-get($map: $colors, $key: 'brightness-100');
     text-decoration: none;
   }
 
@@ -280,5 +285,106 @@ li {
     &:hover {
       color: map-get($map: $colors, $key: 'highlight-main');
     }
+  }
+}
+
+.nav-topics {
+  display: flex;
+  overflow: scroll;
+  gap: 0.675rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid map-get($map: $colors, $key: 'brightness-86');
+  border-bottom: none;
+
+  @include sm {
+    padding: 0.75rem 1rem;
+  }
+
+  a {
+    color: map-get($map: $colors, $key: 'brightness-7');
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 0.875rem;
+
+    @include sm {
+      font-size: 1rem;
+    }
+
+    &:hover {
+      color: map-get($map: $colors, $key: 'news-bright');
+    }
+  }
+
+  &__border {
+    width: 100%;
+    height: 0.8rem;
+    border-inline: 1px solid map-get($map: $colors, $key: 'brightness-86');
+    background-image: repeating-linear-gradient(
+      to bottom,
+      map-get($map: $colors, $key: 'brightness-86'),
+      map-get($map: $colors, $key: 'brightness-86') 0.0625rem,
+      transparent 0.0625rem,
+      transparent 0.25rem
+    );
+  }
+}
+
+.grid-headline {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  padding: 0.5rem;
+}
+
+.card-large,
+.card {
+  background-color: map-get($map: $colors, $key: 'brightness-97');
+  border-top: 1px solid map-get($map: $colors, $key: 'news-dark');
+}
+
+.card-large {
+  & img {
+    width: 100%;
+  }
+
+  &__text {
+    line-height: 1;
+    font-size: $step-0;
+    font-family: $font-secondary;
+    padding: 0 0.25rem;
+  }
+
+  &__sep,
+  &__topic {
+    font-weight: bold;
+    color: map-get($map: $colors, $key: 'news-dark');
+  }
+
+  &__sep {
+    margin-left: 0.25em;
+  }
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 0.25rem;
+
+  & img {
+    width: 100%;
+  }
+
+  &__text {
+    line-height: 1;
+    font-size: $step--1;
+    font-family: $font-secondary;
+    color: map-get($map: $colors, $key: 'brightness-7');
+    padding: 0 0.25rem;
+  }
+
+  &__sep,
+  &__topic {
+    font-weight: bold;
+    color: map-get($map: $colors, $key: 'news-dark');
   }
 }

@@ -11,11 +11,17 @@ $colors: (
   'brand-pastel': #506991,
   'highlight-main': #ffe500,
   'highlight-dark': #ffbb50,
+  'news-dark': #ab0613,
+  'news-main': #c70000,
   'news-bright': #ff4e36,
   'opinion-bright': #ff7f0f,
   'sport-bright': #00b2ff,
   'culture-bright': #eacca0,
   'lifestyle-bright': #ffabdb,
+  'brightness-7': #121212,
+  'brightness-86': #dcdcdc,
+  'brightness-97': #f6f6f6,
+  'brightness-100': #ffffff,
 );
 
 $step--2: clamp(0.91rem, calc(0.89rem + 0.1vw), 0.96rem);
