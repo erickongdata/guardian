@@ -329,12 +329,15 @@ li {
   }
 }
 
+// Sections
+// -------------------------------------------
+
 .section-grid {
   display: grid;
   grid-template-columns: 1;
   padding-bottom: 1rem;
 
-  @include md {
+  @include lg {
     grid-template-columns: 170px 1fr;
     border-inline: 1px solid map-get($map: $colors, $key: 'brightness-86');
     border-bottom: 1px solid map-get($map: $colors, $key: 'brightness-86');
@@ -346,12 +349,27 @@ li {
   font-size: 1.75rem;
   padding: 0.25rem 1rem;
 
-  @include md {
-    border-right: 1px solid map-get($map: $colors, $key: 'brightness-86');
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__sep {
+    display: none;
+    width: 1px;
+    height: 2rem;
+    background-color: map-get($map: $colors, $key: 'brightness-86');
+
+    @include md {
+      display: inline-block;
+    }
   }
 }
 
-.grid-headline {
+// Grids
+// -------------------------------------------
+
+.grid-large {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 0.625rem;
@@ -360,11 +378,10 @@ li {
   @include md {
     grid-template-columns: 2fr 1fr 1fr;
     grid-template-rows: 2fr 3fr;
-    margin-top: 2.5rem;
   }
 
   @include lg {
-    max-height: max-content;
+    margin-top: 2rem;
   }
 
   &__block {
@@ -380,9 +397,29 @@ li {
   }
 }
 
+.grid-small {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 0.625rem;
+  padding: 0.5rem;
+
+  @include md {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include lg {
+    margin-top: 2rem;
+  }
+}
+
+// Cards
+// -------------------------------------------
+
+.card,
+.card-large,
 .card-small {
-  background-color: map-get($map: $colors, $key: 'brightness-97');
-  border-top: 1px solid map-get($map: $colors, $key: 'news-dark');
+  text-decoration: none;
+  color: map-get($map: $colors, $key: 'brightness-7');
 }
 
 .card-large {
@@ -442,11 +479,13 @@ li {
     grid-template-columns: 1fr 2fr;
     border-top: 1px solid map-get($map: $colors, $key: 'news-dark');
     background-color: map-get($map: $colors, $key: 'brightness-97');
+    padding-top: 0.25rem;
 
     @include md {
       display: flex;
       flex-direction: column;
       height: 100%;
+      padding-top: 0;
     }
   }
 
@@ -481,7 +520,8 @@ li {
 }
 
 .card-small {
-  padding: 0.25rem;
+  background-color: map-get($map: $colors, $key: 'brightness-97');
+  border-top: 1px solid map-get($map: $colors, $key: 'news-dark');
 
   @include md {
     display: grid;
