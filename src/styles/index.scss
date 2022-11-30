@@ -47,6 +47,14 @@ li {
   }
 }
 
+.fa-quote-left {
+  color: map-get($map: $colors, $key: 'opinion-main');
+}
+
+.opinion-author {
+  color: map-get($map: $colors, $key: 'opinion-main');
+  font-style: italic;
+}
 // -------------------------------------------
 // Utility
 // -------------------------------------------
