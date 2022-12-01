@@ -23,8 +23,9 @@ const colorCode = {
 };
 
 $(document).ready(() => {
-  async function getDataForSectionLarge(
+  async function getDataForSection(
     section,
+    cardsNum,
     fetchUrl,
     sectionTitle,
     showTopic
@@ -36,154 +37,42 @@ $(document).ready(() => {
     // Title
     $(`${section} .section-title`).text(sectionTitle);
 
-    // large card
-    $(`${section} .card-large__title`)
-      .text(
-        showTopic === 'opinion'
-          ? results[0].webTitle.split(' | ')[0]
-          : results[0].webTitle
-      )
-      .append(
-        showTopic === 'opinion'
-          ? `<div class="opinion-author">${results[0].fields.byline}</div>`
-          : null
-      );
-
-    $(`${section} .card-large img`).attr('src', results[0].fields.thumbnail);
-
-    $(`${section} .card-large__inner`).css(
-      'border-top-color',
-      colorCode[results[0].pillarName]
-    );
-
-    if (showTopic === 'show') {
-      $(`${section} .card-large__topic`)
-        .text(results[0].sectionName)
-        .css('color', colorCode[results[0].pillarName]);
-    } else if (showTopic === 'opinion') {
-      $(`${section} .card-large__topic`)
-        .text('')
-        .prepend('<i class="fa-solid fa-quote-left"></i>');
-      $(`${section} .card-large__sep`).hide();
-    } else {
-      $(`${section} .card-large__topic`).hide();
-      $(`${section} .card-large__sep`).hide();
-    }
-
     // cards
-    for (let i = 0; i < 3; i += 1) {
-      $(`${section} .card__title`)
+    for (let i = 0; i < cardsNum; i += 1) {
+      $(`${section} [class*=__title]`)
         .eq(i)
         .text(
           showTopic === 'opinion'
-            ? results[i + 1].webTitle.split(' | ')[0]
-            : results[i + 1].webTitle
+            ? results[i].webTitle.split(' | ')[0]
+            : results[i].webTitle
         )
         .append(
           showTopic === 'opinion'
-            ? `<div class="opinion-author">${
-                results[i + 1].fields.byline
-              }</div>`
+            ? `<div class="opinion-author">${results[i].fields.byline}</div>`
             : null
         );
 
-      $(`${section} .card img`)
-        .eq(i)
-        .attr('src', results[i + 1].fields.thumbnail);
+      $(`${section} img`).eq(i).attr('src', results[i].fields.thumbnail);
 
-      $(`${section} .card__inner`)
+      $(`${section} [class*="__inner"]`)
         .eq(i)
-        .css('border-top-color', colorCode[results[i + 1].pillarName]);
+        .css('border-top-color', colorCode[results[i].pillarName]);
 
       if (showTopic === 'show') {
-        $(`${section} .card__topic`)
-          .eq(i)
-          .text(results[i + 1].sectionName)
-          .css('color', colorCode[results[i + 1].pillarName]);
-      } else if (showTopic === 'opinion') {
-        $(`${section} .card__topic`)
-          .eq(i)
-          .text('')
-          .prepend('<i class="fa-solid fa-quote-left"></i>');
-        $(`${section} .card__sep`).eq(i).hide();
-      } else {
-        $(`${section} .card__topic`).eq(i).hide();
-        $(`${section} .card__sep`).eq(i).hide();
-      }
-    }
-
-    // small cards
-    for (let i = 0; i < 4; i += 1) {
-      if (showTopic === 'show') {
-        $(`${section} .card-small__topic`)
-          .eq(i)
-          .text(results[i + 4].sectionName)
-          .css('color', colorCode[results[i + 4].pillarName]);
-      } else if (showTopic === 'opinion') {
-        $(`${section} .card-small__topic`)
-          .eq(i)
-          .text('')
-          .prepend('<i class="fa-solid fa-quote-left"></i>');
-        $(`${section} .card-small__sep`).eq(i).hide();
-      } else {
-        $(`${section} .card-small__topic`).eq(i).hide();
-        $(`${section} .card-small__sep`).eq(i).hide();
-      }
-
-      $(`${section} .card-small__title`)
-        .eq(i)
-        .text(
-          showTopic === 'opinion'
-            ? results[i + 4].webTitle.split(' | ')[0]
-            : results[i + 4].webTitle
-        )
-        .append(
-          showTopic === 'opinion'
-            ? `<div class="opinion-author">${
-                results[i + 4].fields.byline
-              }</div>`
-            : null
-        );
-
-      $(`${section} .card-small img`)
-        .eq(i)
-        .attr('src', results[i + 4].fields.thumbnail);
-
-      $(`${section} .card-small`)
-        .eq(i)
-        .css('border-top-color', colorCode[results[i + 4].pillarName]);
-    }
-  }
-
-  async function getDataForSectionSmall(
-    section,
-    fetchUrl,
-    sectionTitle,
-    showTopic
-  ) {
-    const data = await fetchData(fetchUrl).catch((error) => console.log(error));
-    if (data === undefined) return;
-    const { results } = data.response;
-    // Title
-    $(`${section} .section-title`).text(sectionTitle);
-    // cards
-    for (let i = 0; i < 4; i += 1) {
-      if (showTopic === 'show') {
-        $(`${section} .card__topic`)
+        $(`${section} [class*="__topic"]`)
           .eq(i)
           .text(results[i].sectionName)
           .css('color', colorCode[results[i].pillarName]);
+      } else if (showTopic === 'opinion') {
+        $(`${section} [class*="__topic"]`)
+          .eq(i)
+          .text('')
+          .prepend('<i class="fa-solid fa-quote-left"></i>');
+        $(`${section} [class*="__sep"]`).eq(i).hide();
       } else {
-        $(`${section} .card__topic`).eq(i).text('');
-        $(`${section} .card__sep`).eq(i).hide();
+        $(`${section} [class*="__topic"]`).eq(i).hide();
+        $(`${section} [class*="__sep"]`).eq(i).hide();
       }
-      $(`${section} .card__title`).eq(i).text(results[i].webTitle);
-
-      $(`${section} .card img`).eq(i).attr('src', results[i].fields.thumbnail);
-
-      $(`${section} .card__inner`)
-        .eq(i)
-        .css('border-top-color', colorCode[results[i].pillarName]);
     }
   }
 
@@ -200,36 +89,41 @@ $(document).ready(() => {
   }
 
   // Get data for different sections
-  getDataForSectionLarge(
+  getDataForSection(
     '[data-id="headline"]',
+    8,
     getQueryUrlNew('uk news'),
     'Latest News',
     'show'
   );
 
-  getDataForSectionSmall(
+  getDataForSection(
     '[data-id="topic1"]',
+    4,
     getSectionUrl('uk-news'),
     'UK News',
     'no'
   );
 
-  getDataForSectionLarge(
+  getDataForSection(
     '[data-id="opinion"]',
+    8,
     getSectionUrl('commentisfree'),
     'Opinion',
     'opinion'
   );
 
-  getDataForSectionSmall(
+  getDataForSection(
     '[data-id="topic2"]',
+    4,
     getQueryUrlNew('Editorial OR Letters'),
     'Editorial & Letters',
     'show'
   );
 
-  getDataForSectionLarge(
+  getDataForSection(
     '[data-id="topic3"]',
+    8,
     getQueryUrl(
       'sport AND (football OR rugby OR cricket OR hockey OR boxing OR cycling OR formula 1)'
     ),
@@ -237,8 +131,9 @@ $(document).ready(() => {
     'show'
   );
 
-  getDataForSectionLarge(
+  getDataForSection(
     '[data-id="topic4"]',
+    8,
     getSectionUrl('culture'),
     'Culture',
     'show'

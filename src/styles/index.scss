@@ -376,7 +376,7 @@ li {
     justify-content: space-between;
   }
 
-  &__sep {
+  &__divider {
     display: none;
     width: 1px;
     height: 2rem;
@@ -560,11 +560,14 @@ li {
 
 .card-small {
   background-color: map-get($map: $colors, $key: 'brightness-97');
-  border-top: 1px solid map-get($map: $colors, $key: 'news-dark');
 
-  @include md {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+  &__inner {
+    border-top: 1px solid map-get($map: $colors, $key: 'news-dark');
+
+    @include md {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+    }
   }
 
   & img {
