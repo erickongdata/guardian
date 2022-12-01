@@ -366,6 +366,16 @@ li {
   }
 }
 
+.section-header {
+  display: flex;
+  justify-content: space-between;
+
+  @include lg {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+
 .section-title {
   font-family: $font-secondary;
   font-size: 1.75rem;
@@ -382,7 +392,7 @@ li {
     height: 2rem;
     background-color: map-get($map: $colors, $key: 'brightness-86');
 
-    @include md {
+    @include lg {
       display: inline-block;
     }
   }
@@ -755,5 +765,45 @@ li {
     height: 50px;
     border-radius: 50%;
     background-color: map-get($map: $colors, $key: 'brightness-97');
+  }
+}
+
+// Weather
+
+.weather-output {
+  display: flex;
+  align-items: center;
+
+  @include lg {
+    margin-left: 1rem;
+    margin-top: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.w-pressure,
+.w-weather {
+  display: none;
+
+  @include lg {
+    display: block;
+  }
+}
+
+.w-temp {
+  font-size: 1.5rem;
+}
+
+.w-icon {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 3rem;
+  height: 3rem;
+
+  @include lg {
+    width: 5rem;
+    height: 5rem;
   }
 }
