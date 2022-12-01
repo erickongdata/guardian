@@ -408,6 +408,12 @@ li {
     padding: 0.5rem 0;
   }
 
+  &--headline {
+    @include lg {
+      margin-top: 0;
+    }
+  }
+
   &__block {
     display: grid;
     grid-template-rows: 4;

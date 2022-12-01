@@ -15,8 +15,8 @@ async function fetchData(url) {
 
 const colorCode = {
   News: '#ab0613',
-  Culture: '#eacca0',
-  Arts: '#eacca0',
+  Culture: '#a1845c',
+  Arts: '#a1845c',
   Sport: '#0084c6',
   Lifestyle: '#bb3b80',
   Opinion: '#ff7f0f',
@@ -32,8 +32,10 @@ $(document).ready(() => {
     const data = await fetchData(fetchUrl).catch((error) => console.log(error));
     if (data === undefined) return;
     const { results } = data.response;
+
     // Title
     $(`${section} .section-title`).text(sectionTitle);
+
     // large card
     $(`${section} .card-large__title`)
       .text(
@@ -46,7 +48,13 @@ $(document).ready(() => {
           ? `<div class="opinion-author">${results[0].fields.byline}</div>`
           : null
       );
+
     $(`${section} .card-large img`).attr('src', results[0].fields.thumbnail);
+
+    $(`${section} .card-large__inner`).css(
+      'border-top-color',
+      colorCode[results[0].pillarName]
+    );
 
     if (showTopic === 'show') {
       $(`${section} .card-large__topic`)
@@ -78,9 +86,14 @@ $(document).ready(() => {
               }</div>`
             : null
         );
+
       $(`${section} .card img`)
         .eq(i)
         .attr('src', results[i + 1].fields.thumbnail);
+
+      $(`${section} .card__inner`)
+        .eq(i)
+        .css('border-top-color', colorCode[results[i + 1].pillarName]);
 
       if (showTopic === 'show') {
         $(`${section} .card__topic`)
@@ -98,6 +111,7 @@ $(document).ready(() => {
         $(`${section} .card__sep`).eq(i).hide();
       }
     }
+
     // small cards
     for (let i = 0; i < 4; i += 1) {
       if (showTopic === 'show') {
@@ -115,6 +129,7 @@ $(document).ready(() => {
         $(`${section} .card-small__topic`).eq(i).hide();
         $(`${section} .card-small__sep`).eq(i).hide();
       }
+
       $(`${section} .card-small__title`)
         .eq(i)
         .text(
@@ -129,9 +144,14 @@ $(document).ready(() => {
               }</div>`
             : null
         );
+
       $(`${section} .card-small img`)
         .eq(i)
         .attr('src', results[i + 4].fields.thumbnail);
+
+      $(`${section} .card-small`)
+        .eq(i)
+        .css('border-top-color', colorCode[results[i + 4].pillarName]);
     }
   }
 
@@ -148,7 +168,7 @@ $(document).ready(() => {
     $(`${section} .section-title`).text(sectionTitle);
     // cards
     for (let i = 0; i < 4; i += 1) {
-      if (showTopic === 'yes') {
+      if (showTopic === 'show') {
         $(`${section} .card__topic`)
           .eq(i)
           .text(results[i].sectionName)
@@ -158,21 +178,31 @@ $(document).ready(() => {
         $(`${section} .card__sep`).eq(i).hide();
       }
       $(`${section} .card__title`).eq(i).text(results[i].webTitle);
+
       $(`${section} .card img`).eq(i).attr('src', results[i].fields.thumbnail);
+
+      $(`${section} .card__inner`)
+        .eq(i)
+        .css('border-top-color', colorCode[results[i].pillarName]);
     }
   }
 
-  function getQueryUrl(querySearchTerm) {
+  function getQueryUrlNew(querySearchTerm) {
     return `https://content.guardianapis.com/search?q=${querySearchTerm}&order-by=newest&show-fields=thumbnail%2Cbyline&api-key=${apiKey}`;
+  }
+
+  function getQueryUrl(querySearchTerm) {
+    return `https://content.guardianapis.com/search?q=${querySearchTerm}&show-fields=thumbnail%2Cbyline&api-key=${apiKey}`;
   }
 
   function getSectionUrl(sectionSearchTerm) {
     return `https://content.guardianapis.com/search?section=${sectionSearchTerm}&order-by=newest&show-fields=thumbnail%2Cbyline&api-key=${apiKey}`;
   }
 
+  // Get data for different sections
   getDataForSectionLarge(
     '[data-id="headline"]',
-    getQueryUrl('uk%20news'),
+    getQueryUrlNew('uk news'),
     'Latest News',
     'show'
   );
@@ -189,6 +219,29 @@ $(document).ready(() => {
     getSectionUrl('commentisfree'),
     'Opinion',
     'opinion'
+  );
+
+  getDataForSectionSmall(
+    '[data-id="topic2"]',
+    getQueryUrlNew('Editorial OR Letters'),
+    'Editorial & Letters',
+    'show'
+  );
+
+  getDataForSectionLarge(
+    '[data-id="topic3"]',
+    getQueryUrl(
+      'sport AND (football OR rugby OR cricket OR hockey OR boxing OR cycling OR formula 1)'
+    ),
+    'Sport',
+    'show'
+  );
+
+  getDataForSectionLarge(
+    '[data-id="topic4"]',
+    getSectionUrl('culture'),
+    'Culture',
+    'show'
   );
 
   // getAllData();
