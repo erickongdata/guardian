@@ -100,7 +100,7 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="headline"]',
       8,
-      getQueryUrlNew('news'),
+      getQueryUrlNew('news AND (world news OR politics)'),
       'Headlines',
       'show'
     );
@@ -114,7 +114,7 @@ $(document).ready(() => {
     );
 
     getDataForSection(
-      '[data-id="opinion"]',
+      '[data-id="topic2"]',
       8,
       getSectionUrl('commentisfree'),
       'Opinion',
@@ -122,7 +122,7 @@ $(document).ready(() => {
     );
 
     getDataForSection(
-      '[data-id="topic2"]',
+      '[data-id="topic3"]',
       4,
       getQueryUrl('Editorial OR Letters'),
       'Editorial & Letters',
@@ -130,7 +130,7 @@ $(document).ready(() => {
     );
 
     getDataForSection(
-      '[data-id="topic3"]',
+      '[data-id="topic4"]',
       8,
       getQueryUrlNew(
         'sport AND (football OR rugby OR cricket OR hockey OR boxing OR cycling OR formula 1)'
@@ -140,7 +140,7 @@ $(document).ready(() => {
     );
 
     getDataForSection(
-      '[data-id="topic4"]',
+      '[data-id="topic5"]',
       8,
       getQueryUrl('art OR culture OR film OR painting OR photography'),
       'Culture',
@@ -177,7 +177,7 @@ $(document).ready(() => {
     $('[data-id="w-pressure"]').text(`${data.main.pressure} hPa`);
   }
 
-  function printWeather(data) {
+  function printWeatherDesc(data) {
     $('[data-id="w-weather"]').text(data.weather[0].description);
   }
 
@@ -218,12 +218,45 @@ $(document).ready(() => {
     );
   }
 
-  function printData(data) {
+  function printWeatherData(data) {
     printCity(data);
     printTemp(data);
     printPressure(data);
-    printWeather(data);
+    printWeatherDesc(data);
     printIcon(data);
+  }
+
+  function printDate() {
+    const weekday = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+
+    const month = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    const d = new Date();
+    $(`[data-id="date-day"]`).text(weekday[d.getDay()]);
+    $(`[data-id="date-date"]`).text(
+      `${d.getDate()} ${month[d.getMonth()]} ${d.getFullYear()}`
+    );
   }
 
   // Activate the webpage
@@ -232,7 +265,8 @@ $(document).ready(() => {
     const weather = await getWeather('london').catch((error) =>
       console.log(error)
     );
-    printData(weather);
+    printWeatherData(weather);
+    printDate();
   }
 
   activateApp();
