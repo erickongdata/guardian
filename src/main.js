@@ -141,6 +141,14 @@ $(document).ready(() => {
 
     getDataForSection(
       '[data-id="topic5"]',
+      4,
+      getQueryUrl('climate crisis'),
+      'Climate crisis',
+      'show'
+    );
+
+    getDataForSection(
+      '[data-id="topic6"]',
       8,
       getQueryUrl('art OR culture OR film OR painting OR photography'),
       'Culture',
@@ -148,7 +156,7 @@ $(document).ready(() => {
     );
   }
 
-  // Weather form OpenWeatherMap
+  // Weather from OpenWeatherMap
   async function getWeather(city) {
     const response = await fetch(
       `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${weatherApiKey}`,
