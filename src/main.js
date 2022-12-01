@@ -23,17 +23,37 @@ const colorCode = {
   Opinion: '#e05e00',
 };
 
+// Fisher–Yates shuffle
+const shuffleArray = (array) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 $(document).ready(() => {
   async function getDataForSection(
     section,
     cardsNum,
-    fetchUrl,
+    fetchUrls,
     sectionTitle,
     showTopic
   ) {
-    const data = await fetchData(fetchUrl).catch((error) => console.log(error));
-    if (data === undefined) return;
-    const { results } = data.response;
+    // Get data from fetchUrls list
+    const dataAll = fetchUrls.map(async (url) => {
+      const data = await fetchData(url).catch((error) => console.log(error));
+      return data.response.results;
+    });
+    const rawResults = await Promise.all(dataAll);
+    // Concat data array
+    const concatResults = rawResults.reduce(
+      (acc, res) => acc.concat([...res]),
+      []
+    );
+    // Shuffle results
+    const results = shuffleArray(concatResults);
 
     // Title
     $(`${section} .section-title`).text(sectionTitle);
@@ -100,7 +120,12 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="headline"]',
       8,
-      getQueryUrlNew('news AND (world news OR politics)'),
+      [
+        getSectionUrl('uk-news'),
+        getSectionUrl('politics'),
+        getSectionUrl('world'),
+        getSectionUrl('society'),
+      ],
       'Headlines',
       'show'
     );
@@ -108,7 +133,7 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="topic1"]',
       4,
-      getSectionUrl('uk-news'),
+      [getSectionUrl('uk-news')],
       'UK News',
       'no'
     );
@@ -116,7 +141,7 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="topic2"]',
       8,
-      getSectionUrl('commentisfree'),
+      [getSectionUrl('commentisfree')],
       'Opinion',
       'opinion'
     );
@@ -124,7 +149,7 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="topic3"]',
       4,
-      getQueryUrl('Editorial OR Letters'),
+      [getQueryUrl('Editorial OR Letters')],
       'Editorial & Letters',
       'show'
     );
@@ -132,9 +157,7 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="topic4"]',
       8,
-      getQueryUrlNew(
-        'sport AND (football OR rugby OR cricket OR hockey OR boxing OR cycling OR formula 1)'
-      ),
+      [getSectionUrl('sport'), getSectionUrl('football')],
       'Sport',
       'show'
     );
@@ -142,7 +165,7 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="topic5"]',
       4,
-      getQueryUrl('climate crisis'),
+      [getQueryUrl('climate crisis')],
       'Climate crisis',
       'show'
     );
@@ -150,7 +173,12 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="topic6"]',
       8,
-      getQueryUrl('art OR culture OR film OR painting OR photography'),
+      [
+        getSectionUrl('artanddesign'),
+        getSectionUrl('film'),
+        getSectionUrl('music'),
+        getSectionUrl('culture'),
+      ],
       'Culture',
       'show'
     );
