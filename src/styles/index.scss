@@ -317,10 +317,15 @@ li {
 .nav-topics {
   display: flex;
   overflow: scroll;
+  scrollbar-width: none;
   gap: 0.675rem;
   padding: 0.5rem 1rem;
   border: 1px solid map-get($map: $colors, $key: 'brightness-86');
   border-bottom: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @include sm {
     padding: 0.75rem 1rem;
