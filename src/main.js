@@ -196,7 +196,7 @@ $(document).ready(() => {
   // Weather from OpenWeatherMap
   async function getWeather(city) {
     const response = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${weatherApiKey}`,
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${weatherApiKey}`,
       {
         mode: 'cors',
       }
