@@ -103,16 +103,12 @@ $(document).ready(() => {
     }
   }
 
-  function getQueryUrlNew(querySearchTerm) {
-    return `https://content.guardianapis.com/search?q=${querySearchTerm}&order-by=newest&show-fields=thumbnail%2Cbyline&api-key=${guardianApiKey}`;
+  function getQueryUrl(querySearchTerm, pageSize = 10, orderBy = 'relevance') {
+    return `https://content.guardianapis.com/search?q=${querySearchTerm}&page-size=${pageSize}&order-by${orderBy}&show-fields=thumbnail%2Cbyline&api-key=${guardianApiKey}`;
   }
 
-  function getQueryUrl(querySearchTerm) {
-    return `https://content.guardianapis.com/search?q=${querySearchTerm}&show-fields=thumbnail%2Cbyline&api-key=${guardianApiKey}`;
-  }
-
-  function getSectionUrl(sectionSearchTerm) {
-    return `https://content.guardianapis.com/search?section=${sectionSearchTerm}&order-by=newest&show-fields=thumbnail%2Cbyline&api-key=${guardianApiKey}`;
+  function getSectionUrl(sectionSearchTerm, pageSize = 10) {
+    return `https://content.guardianapis.com/search?section=${sectionSearchTerm}&page-size=${pageSize}&order-by=newest&show-fields=thumbnail%2Cbyline&api-key=${guardianApiKey}`;
   }
 
   // Get data for different sections
@@ -121,10 +117,10 @@ $(document).ready(() => {
       '[data-id="headline"]',
       8,
       [
-        getSectionUrl('uk-news'),
-        getSectionUrl('politics'),
-        getSectionUrl('world'),
-        getSectionUrl('society'),
+        getSectionUrl('uk-news', 4),
+        getSectionUrl('politics', 3),
+        getSectionUrl('world', 5),
+        getSectionUrl('society', 2),
       ],
       'Headlines',
       'show'
@@ -149,7 +145,7 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="topic3"]',
       4,
-      [getQueryUrl('Editorial OR Letters')],
+      [getQueryUrl('Editorial OR Letters'), getSectionUrl('theobserver', 5)],
       'Editorial & Letters',
       'show'
     );
@@ -157,7 +153,7 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="topic4"]',
       8,
-      [getSectionUrl('sport'), getSectionUrl('football')],
+      [getSectionUrl('sport', 8), getSectionUrl('football', 4)],
       'Sport',
       'show'
     );
@@ -165,7 +161,7 @@ $(document).ready(() => {
     getDataForSection(
       '[data-id="topic5"]',
       4,
-      [getQueryUrl('climate crisis')],
+      [getQueryUrl('climate crisis', 16)],
       'Climate crisis',
       'show'
     );
@@ -174,12 +170,25 @@ $(document).ready(() => {
       '[data-id="topic6"]',
       8,
       [
-        getSectionUrl('artanddesign'),
-        getSectionUrl('film'),
-        getSectionUrl('music'),
-        getSectionUrl('culture'),
+        getSectionUrl('artanddesign', 4),
+        getSectionUrl('film', 4),
+        getSectionUrl('music', 4),
+        getSectionUrl('culture', 4),
       ],
       'Culture',
+      'show'
+    );
+
+    getDataForSection(
+      '[data-id="topic7"]',
+      8,
+      [
+        getSectionUrl('fashion', 4),
+        getSectionUrl('food', 4),
+        getSectionUrl('travel', 4),
+        getSectionUrl('lifeandstyle', 4),
+      ],
+      'Lifestyle',
       'show'
     );
   }
