@@ -391,6 +391,10 @@ li {
   &__wrapper {
     display: flex;
     justify-content: space-between;
+
+    @include lg {
+      width: 100%;
+    }
   }
 
   &__divider {
